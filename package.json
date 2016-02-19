@@ -1,0 +1,19 @@
+{
+  "name": "pipeline",
+  "version": "0.0.1",
+  "description": "Just let things flow",
+  "main": "index.js",
+  "bin": {
+    "pipeline": "src/index.js"
+  },
+  "scripts": {
+    "test": "gulp test"
+  },
+  "author": "Netanel Gilad <netanelgilad@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "commander": "^2.9.0",
+    "require-relative": "^0.8.7",
+    "webpack": "^1.12.13"
+  }
+}
