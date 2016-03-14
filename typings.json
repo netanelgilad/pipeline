@@ -1,0 +1,13 @@
+{
+  "ambientDependencies": {
+    "chai": "registry:dt/chai#3.4.0+20160216071402",
+    "commander": "registry:dt/commander#2.3.0+20160102232444",
+    "mocha": "registry:dt/mocha#2.2.5+20151023103246",
+    "node": "registry:dt/node#4.0.0+20160311162451",
+    "sinon": "registry:dt/sinon#1.16.0+20151027143416",
+    "sinon-chai": "registry:dt/sinon-chai#2.7.0+20160111233447"
+  },
+  "dependencies": {
+    "lodash": "registry:npm/lodash#4.0.0+20160305082308"
+  }
+}

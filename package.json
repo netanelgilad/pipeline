@@ -2,18 +2,28 @@
   "name": "pipeline",
   "version": "0.0.1",
   "description": "Just let things flow",
-  "main": "index.js",
+  "main": "src/index.js",
   "bin": {
     "pipeline": "src/index.js"
   },
   "scripts": {
-    "test": "gulp test"
+    "start": "node src/index.js",
+    "test": "gulp test",
+    "postinstall": "typings install"
   },
   "author": "Netanel Gilad <netanelgilad@gmail.com>",
   "license": "MIT",
   "dependencies": {
     "commander": "^2.9.0",
+    "lodash": "^4.6.1",
+    "pkginfo": "^0.4.0",
     "require-relative": "^0.8.7",
     "webpack": "^1.12.13"
+  },
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "sinon": "^1.17.3",
+    "sinon-chai": "^2.8.0",
+    "typescript": "^1.8.7"
   }
 }
