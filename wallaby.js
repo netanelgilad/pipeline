@@ -1,6 +1,7 @@
 module.exports = function (w) {
   return {
     files: [
+      'package.json',
       'src/**/*.ts',
       '!src/**/*.spec.ts'
     ],
