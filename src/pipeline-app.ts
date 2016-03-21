@@ -1,12 +1,13 @@
 import "reflect-metadata";
 import {Injectable} from "angular2/core";
-import { readFileSync, accessSync, F_OK } from 'fs';
+import { readFileSync, accessSync, F_OK, writeFileSync } from 'fs';
 import { join } from 'path';
-import { safeLoad } from 'js-yaml';
+import { safeLoad, safeDump } from 'js-yaml';
 import VError = require("verror");
 import {Log} from "./logger";
 import {PipesLoader} from "./pipes-loader";
 import {CommandRunner} from "./command-runner";
+import {PipelineEnvironment} from "./pipeline-environment";
 
 const PIPELINE_DIRECTORY = '.pipeline';
 const PIPELINE_FILE = 'pipeline';
@@ -16,13 +17,16 @@ const PIPELINE_FILE = 'pipeline';
 export class PipelineApp {
 
   constructor(private pipesLoader: PipesLoader,
-              private commandRunner: CommandRunner) {}
+              private commandRunner: CommandRunner,
+              private pipelineEnvironment: PipelineEnvironment) {}
 
   start() {
     this.moveToProjectDirectory();
     const pipelineDefinition = this.loadPipelineDefinition();
+    this.pipelineEnvironment.setPipelineDefinition(pipelineDefinition);
     this.pipesLoader.loadPipes(pipelineDefinition.pipes);
     this.commandRunner.run(process.argv);
+    this.writePipelineDefinition(this.pipelineEnvironment.getPipelineDefinition());
   }
 
   moveToProjectDirectory() {
@@ -32,6 +36,10 @@ export class PipelineApp {
   
   loadPipelineDefinition() {
     return safeLoad(readFileSync(join(PIPELINE_DIRECTORY, PIPELINE_FILE), 'utf8'));
+  }
+  
+  writePipelineDefinition(pipelineDefinition) {
+    writeFileSync(join(PIPELINE_DIRECTORY, PIPELINE_FILE), safeDump(pipelineDefinition), 'utf8');
   }
 
   private moveToDirectoryWithPipelineDirectory() {

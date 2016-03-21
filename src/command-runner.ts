@@ -2,6 +2,7 @@ import {Injectable} from "angular2/core";
 import commander = require('commander');
 import pkgInfo = require('pkginfo');
 import {Log} from "./logger";
+import {PipelineEnvironment} from "./pipeline-environment";
 
 interface CommandDefinition {
   name: string;
@@ -14,7 +15,7 @@ interface CommandDefinition {
 export class CommandRunner {
   private program;
   
-  constructor() {
+  constructor(private pipelineEnvironment: PipelineEnvironment) {
     const packageVersion = pkgInfo.read(module).package.version;
     this.program = commander.version(packageVersion);
   }
@@ -23,7 +24,9 @@ export class CommandRunner {
     this.program
       .command(commandDefinition.name)
       .description(commandDefinition.description)
-      .action(commandDefinition.action);
+      .action((...args) => {
+        commandDefinition.action(this.pipelineEnvironment, ...args);
+      });
   }
   
   run(args) {
